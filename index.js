@@ -11,9 +11,7 @@ function isObjectWith(obj, props) {
 }
 
 function isArrayLike(obj) {
-    return (isObjectWith(obj, ["length"])
-        && typeof obj[Symbol.iterator] === "function")
-        || (typeof obj === "string");
+    return isObjectWith(obj, ["length"]) || (typeof obj === "string");
 }
 
 function isCollectionLike(obj, excludeWeakOnes = false) {

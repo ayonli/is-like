@@ -6,7 +6,7 @@ This module currently include the following functions.
 
 #### `isArrayLike(obj: any): boolean`
 
-*Will check if the input is of type `object` or `string` with `length` property* *and `[Symbol.iterator]()` method.*
+*Will check if the input is of type `object` with `length` property or a string.*
 
 ```js
 assert(isArrayLike([1, 2, 3]));
