@@ -2,7 +2,15 @@
 
 **Functions to check if an object is something-like.**
 
-This module currently include the following functions.
+## Install
+
+```sh
+npm i is-like
+```
+
+## API
+
+Currently, this module includes the following functions.
 
 #### `isArrayLike(obj: any): boolean`
 
