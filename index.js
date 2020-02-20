@@ -19,16 +19,17 @@ function isArrayLike(obj, strict = false) {
             || (typeof obj === "string");
     } else if (isObjectWith(obj, ["length", "number"])) {
         let keys = Object.keys(obj);
+        let isNonEnumLength = !keys.includes("length");
+        let indexes;
 
-        if (obj.length === 0) {
-            return !keys.includes("length");
+        if (obj.length === 0 ||
+            (indexes = keys.map(Number).filter(isFinite)).length === 0) {
+            return isNonEnumLength;
         } else {
-            let indexes = keys.map(Number).filter(isFinite);
+            let hasIterator = typeof obj[Symbol.iterator] === "function";
 
             for (let i = obj.length; i--;) {
-                if (!indexes.includes(i) &&
-                    typeof obj[Symbol.iterator] !== "function"
-                ) {
+                if (!indexes.includes(i) && !(isNonEnumLength || hasIterator)) {
                     return false;
                 }
             }
