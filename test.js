@@ -61,6 +61,26 @@ describe("isArrayLike", () => {
         assert(isArrayLike(new ArrayLike()));
     });
 
+    it("should check an array-like object strictly", () => {
+        assert(!isArrayLike({ length: 0 }, true));
+        assert(isArrayLike({ 0: "hello", 1: "world", length: 2 }, true));
+        assert(!isArrayLike({ 0: "hello", length: 2 }, true));
+
+        let arrLike = {};
+        Object.defineProperty(arrLike, "length", {
+            value: 0
+        });
+        assert(isArrayLike(arrLike, true));
+
+        let args;
+        (function (a, b) { args = arguments })(1, 2);
+        assert.strictEqual(isArrayLike(args, true), true);
+        
+        args.length = 10;
+        console.log(args);
+        assert.strictEqual(isArrayLike(args, true), true);
+    });
+
     it("should check non-array-like objects", () => {
         assert(!isArrayLike(123));
         assert(!isArrayLike(true));

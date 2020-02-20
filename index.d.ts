@@ -1,4 +1,4 @@
-export declare function isArrayLike(obj: any): obj is ArrayLike<any>;
+export declare function isArrayLike(obj: any, strict?: boolean): obj is ArrayLike<any>;
 export declare function isCollectionLike(obj: any): boolean;
 export declare function isCollectionLike(obj: any, excludeWeakOnes: boolean): obj is {
     size: number;

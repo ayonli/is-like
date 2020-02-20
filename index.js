@@ -3,36 +3,63 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 /**
  * @param {any} obj 
- * @param {Array<string|symbol>} props 
+ * @param {Array<[string|symbol, string]>} props 
+ * @param {Array<string>} types
  */
-function isObjectWith(obj, props) {
+function isObjectWith(obj, ...props) {
     let isObj = typeof obj === "object" && obj !== null;
-    return isObj && props.every(p => p in obj);
+    return isObj && props.every(([p, t]) => p in obj && typeof obj[p] === t);
 }
 
-function isArrayLike(obj) {
-    return isObjectWith(obj, ["length"]) || (typeof obj === "string");
+function isArrayLike(obj, strict = false) {
+    if (Array.isArray(obj)) {
+        return true;
+    } else if (!strict) {
+        return isObjectWith(obj, ["length", "number"])
+            || (typeof obj === "string");
+    } else if (isObjectWith(obj, ["length", "number"])) {
+        let keys = Object.keys(obj);
+
+        if (obj.length === 0) {
+            return !keys.includes("length");
+        } else {
+            let indexes = keys.map(Number).filter(isFinite);
+
+            for (let i = obj.length; i--;) {
+                if (!indexes.includes(i) &&
+                    typeof obj[Symbol.iterator] !== "function"
+                ) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function isCollectionLike(obj, excludeWeakOnes = false) {
-    return (isObjectWith(obj, ["size"])
-        && typeof obj[Symbol.iterator] === "function")
+    return (isObjectWith(obj, ["size", "number"], [Symbol.iterator, "function"]))
         || (!excludeWeakOnes &&
             (obj instanceof WeakMap || obj instanceof WeakSet));
 }
 
 function isBufferLike(obj) {
-    return isObjectWith(obj, ["byteLength"])
-        && typeof obj.slice === "function";
+    return isObjectWith(obj, ["byteLength", "number"], ["slice", "function"]);
 }
 
 function isErrorLike(obj) {
-    return isObjectWith(obj, ["name", "message", "stack"]);
+    return isObjectWith(obj,
+        ["name", "string"],
+        ["message", "string"],
+        ["stack", "string"]
+    );
 }
 
 function isPromiseLike(obj) {
-    return isObjectWith(obj, [])
-        && typeof obj.then === "function";
+    return isObjectWith(obj, ["then", "function"]);
 }
 
 exports.isArrayLike = isArrayLike;
