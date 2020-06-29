@@ -1,6 +1,6 @@
 # is-like
 
-**Functions to check if an object is something-like.**
+**Functions to check if a value is something alike.**
 
 ## Install
 
@@ -12,9 +12,35 @@ npm i is-like
 
 Currently, this module includes the following functions.
 
-#### `isArrayLike(obj: any): boolean`
+#### `isDictLike(value: any): boolean`
 
-*Will check if the input is of type `object` with `length` property or a string.*
+*Checks if the input value is a dict `object`, which includes key-value pairs.*
+
+```js
+assert(isDictLike({}));
+assert(isDictLike({ foo: "bar" }));
+
+class Test {
+    constructor(name) {
+        this.name = name;
+    }
+}
+assert(isDictLike(new Test("Test")));
+assert(!isDictLike(new Test())); // an empty custom object will fail
+
+assert(!isDictLike(new Date()));
+assert(!isDictLike(/[a-z]/));
+assert(!isDictLike(["hello", "world"]));
+assert(!isDictLike(new Map([["foo", "Hello"], ["bar", "World"]])));
+assert(!isDictLike(new Error("something went wrong")));
+assert(!isDictLike(Buffer.from("Hello, World!")));
+assert(!isDictLike(Promise.resolve("Hello, World!")));
+```
+
+#### `isArrayLike(value: any): boolean`
+
+*Checks if the input value is an `object` with `length` property*
+*or a string.*
 
 ```js
 assert(isArrayLike([1, 2, 3]));
@@ -47,11 +73,11 @@ class ArrayLike {
 assert(isArrayLike(new ArrayLike()));
 ```
 
-#### `isCollectionLike(obj: any, excludeWeakOnes?: boolean): boolean`
+#### `isCollectionLike(value: any, excludeWeakOnes?: boolean): boolean`
 
-*Will check if the input is of type `object` with `size` property*
+*Checks if the input value is an `object` with `size` property*
 *and `[Symbol.iterator]()` method, or is an instance of **WeakMap** or*
-***WeakSet** if `excludeWeakOnes` is not set true.*
+***WeakSet** if `excludeWeakOnes` is not set.*
 
 ```js
 assert(isCollectionLike(new Map));
@@ -76,9 +102,9 @@ class CollectionLike {
 assert(isCollectionLike(new CollectionLike));
 ```
 
-#### `isBufferLike(obj: any): boolean`
+#### `isBufferLike(value: any): boolean`
 
-*Will check if the input is of type `object` with `byteLength` property*
+*Checks if the input value is an `object` with `byteLength` property*
 *and `slice()` method.*
 
 ```js
@@ -94,9 +120,9 @@ assert(isArrayLike(Float32Array.from([1, 2, 3])));
 assert(isArrayLike(Float64Array.from([1, 2, 3])));
 ```
 
-#### `isErrorLike(obj: any): boolean`
+#### `isErrorLike(value: any): boolean`
 
-*Will check if the input is of type `object` with `name`, `message` and `stack`*
+*Checks if the input value is an `object` with `name`, `message` and `stack`*
 *properties.*
 
 ```js
@@ -118,9 +144,9 @@ Error.captureStackTrace(err);
 assert(isErrorLike(err));
 ```
 
-#### `isPromiseLike(obj: any): boolean`
+#### `isPromiseLike(value: any): boolean`
 
-*Will check if the input is of type `object` with `then()` method.*
+*Checks if the input is an `object` with `then()` method.*
 
 ```js
 assert(isPromiseLike(Promise.resolve(123)));

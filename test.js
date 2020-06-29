@@ -3,12 +3,40 @@
 
 const assert = require("assert");
 const {
+    isDictLike,
     isArrayLike,
     isCollectionLike,
     isBufferLike,
     isErrorLike,
     isPromiseLike
 } = require(".");
+
+describe("isDictLike", () => {
+    it("should check an plain object", () => {
+        assert(isDictLike({}));
+        assert(isDictLike({ foo: "bar" }));
+    });
+
+    it("should check an instance of a user-defined class", () => {
+        class Test {
+            constructor(name) {
+                this.name = name;
+            }
+        }
+        assert(isDictLike(new Test("Test")));
+        assert(!isDictLike(new Test()));
+    });
+
+    it("should check for non-dict objects", () => {
+        assert(!isDictLike(new Date()));
+        assert(!isDictLike(/[a-z]/));
+        assert(!isDictLike(["hello", "world"]));
+        assert(!isDictLike(new Map([["foo", "Hello"], ["bar", "World"]])));
+        assert(!isDictLike(new Error("something went wrong")));
+        assert(!isDictLike(Buffer.from("Hello, World!")));
+        assert(!isDictLike(Promise.resolve("Hello, World!")));
+    });
+});
 
 describe("isArrayLike", () => {
     it("should check an Array", () => {
@@ -75,9 +103,8 @@ describe("isArrayLike", () => {
         let args;
         (function (a, b) { args = arguments })(1, 2);
         assert.strictEqual(isArrayLike(args, true), true);
-        
+
         args.length = 10;
-        console.log(args);
         assert.strictEqual(isArrayLike(args, true), true);
     });
 
