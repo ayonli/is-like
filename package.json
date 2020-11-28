@@ -1,10 +1,14 @@
 {
   "name": "is-like",
-  "version": "0.1.6",
-  "description": "Functions to check if an object is something-like.",
+  "version": "0.1.7",
+  "description": "Functions to check if a value is something alike.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
+    "prepublishOnly": "npm link @babel/core && mv index.js index.mjs && babel --presets @babel/env -o index.js index.mjs",
+    "postpublish": "mv index.mjs index.js",
+    "pretest": "npm run prepublishOnly",
+    "posttest": "npm run postpublish",
     "test": "mocha"
   },
   "repository": {
@@ -21,13 +25,14 @@
     "TypedArray",
     "array-like"
   ],
-  "author": "Ayon Lee <i@hyurl.com>",
+  "author": "A-yon Lee <i@hyurl.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hyurl/is-like/issues"
   },
   "homepage": "https://github.com/hyurl/is-like#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.12.7",
     "@types/node": "^12.7.12",
     "mocha": "^6.2.1"
   }

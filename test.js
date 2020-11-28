@@ -6,7 +6,7 @@ const {
     isDictLike,
     isArrayLike,
     isCollectionLike,
-    isBufferLike,
+    isTypedArrayLike,
     isErrorLike,
     isPromiseLike
 } = require(".");
@@ -166,13 +166,13 @@ describe("isCollectionLike", () => {
     });
 });
 
-describe("isBufferLike", () => {
+describe("isTypedArrayLike", () => {
     it("should check a Buffer", () => {
-        assert(isBufferLike(Buffer.from([1, 2, 3])));
+        assert(isTypedArrayLike(Buffer.from([1, 2, 3])));
     });
 
     it("should check a ArrayBuffer", () => {
-        assert(isBufferLike(new ArrayBuffer(8)));
+        assert(isTypedArrayLike(new ArrayBuffer(8)));
     });
 
     it("should check TypedArrays", () => {
