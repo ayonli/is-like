@@ -13,7 +13,7 @@ npm i is-like
 ### Deno
 
 ```ts
-import { isDictLike, isArrayLike, /* ... */ } from "https://deno.land/x/is_like/index.ts";
+import { isDictLike, isArrayLike, /* ... */ } from "https://deno.land/x/is_like/index.js";
 ```
 
 ## API
