@@ -27,6 +27,7 @@ export function isDictLike(value) {
             !(value instanceof Date) &&
             !(value instanceof RegExp) &&
             !isArrayLike(value, true) &&
+            !isObjectIdLike(value) &&
             !isEmptyDict(value) &&
             !isTypedArrayLike(value) &&
             !isCollectionLike(value) &&
@@ -109,4 +110,10 @@ export function isErrorLike(value) {
  */
 export function isPromiseLike(value) {
     return isObjectWith(value, ["then", "function"]);
+}
+
+export function isObjectIdLike(value) {
+    return typeof value === "object" && value !== null
+        && (value.constructor.name === "ObjectId"
+            || value.constructor.name === "ObjectID");
 }

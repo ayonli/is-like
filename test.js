@@ -8,7 +8,8 @@ const {
     isCollectionLike,
     isTypedArrayLike,
     isErrorLike,
-    isPromiseLike
+    isPromiseLike,
+    isObjectIdLike
 } = require(".");
 
 describe("isDictLike", () => {
@@ -227,4 +228,14 @@ describe("isPromiseLike", () => {
         assert(isPromiseLike({ then: () => { } }));
         assert(!isPromiseLike({ then: 123 }));
     });
+});
+
+describe("isObjectIdLike", () => {
+    class ObjectId { }
+    class ObjectID {}
+
+    it("should check ObjectID-like objects", () => {
+        assert(isObjectIdLike(new ObjectId()));
+        assert(isObjectIdLike(new ObjectID()));
+    })
 });

@@ -40,3 +40,6 @@ export declare function isErrorLike(value: any): value is Error;
 
 /** Checks if the input is an `object` with `then()` method. */
 export declare function isPromiseLike(value: any): value is PromiseLike<any>;
+
+/** Checks if the input might be an MongoDB ObjectId. */
+export declare function isObjectIdLike(value: any): boolean;
