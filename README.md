@@ -15,7 +15,7 @@ npm i is-like
 ```ts
 import { isDictLike, isArrayLike, /* ... */ } from "https://deno.land/x/is_like/index.js";
 // Or
-import { mix, mixin, Mixed } from "https://github.com/ayonli/is-like/raw/master/index.js";
+import { isDictLike, isArrayLike, /* ... */ } from "https://github.com/ayonli/is-like/raw/master/index.js";
 ```
 
 ## API
