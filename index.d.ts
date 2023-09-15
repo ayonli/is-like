@@ -1,7 +1,7 @@
 /**
  * Checks if the input value is a dict `object`, which includes key-value pairs.
  */
-export declare function isDictLike(value: any): value is { [x: string]: any; };
+export declare function isDictLike(value: any): value is { [x: string | symbol]: any; };
 
 /**
  * Checks if the input value is an `object` with `length` property or a string.

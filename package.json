@@ -1,6 +1,6 @@
 {
   "name": "is-like",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Functions to check if a value is something alike.",
   "main": "index.js",
   "types": "index.d.ts",

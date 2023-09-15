@@ -19,7 +19,7 @@ function isEmptyDict(obj) {
 
 /**
  * Checks if the input value is a dict `object`, which includes key-value pairs.
- * @returns {value is { [x: string]: any; }}
+ * @returns {value is { [x: string | symbol]: any; }}
  */
 export function isDictLike(value) {
     return typeof value === "object" && value !== null
