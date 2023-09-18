@@ -9,7 +9,8 @@
     "postpublish": "mv index.mjs index.js",
     "pretest": "npm run prepublishOnly",
     "posttest": "npm run postpublish",
-    "test": "mocha"
+    "test": "mocha",
+    "test:bun": "bun run ./node_modules/mocha/bin/mocha test.js"
   },
   "repository": {
     "type": "git",
