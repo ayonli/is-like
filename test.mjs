@@ -1,8 +1,5 @@
-/* global describe, it, BigInt, BigInt64Array, BigUint64Array */
-"use strict";
-
-const assert = require("assert");
-const {
+import assert from "node:assert";
+import {
     isDictLike,
     isArrayLike,
     isCollectionLike,
@@ -10,7 +7,7 @@ const {
     isErrorLike,
     isPromiseLike,
     isObjectIdLike
-} = require(".");
+} from "./index.mjs";
 
 describe("isDictLike", () => {
     it("should check an plain object", () => {
@@ -34,7 +31,6 @@ describe("isDictLike", () => {
         assert(!isDictLike(["hello", "world"]));
         assert(!isDictLike(new Map([["foo", "Hello"], ["bar", "World"]])));
         assert(!isDictLike(new Error("something went wrong")));
-        assert(!isDictLike(Buffer.from("Hello, World!")));
         assert(!isDictLike(Promise.resolve("Hello, World!")));
     });
 });
@@ -61,7 +57,9 @@ describe("isArrayLike", () => {
     });
 
     it("should check Buffer", () => {
-        assert(isArrayLike(Buffer.from([1, 2, 3])));
+        if (typeof Buffer === "function") {
+            assert(isArrayLike(Buffer.from([1, 2, 3])));
+        }
     });
 
     it("should check the arguments", () => {
@@ -102,7 +100,7 @@ describe("isArrayLike", () => {
         assert(isArrayLike(arrLike, true));
 
         let args;
-        (function (a, b) { args = arguments })(1, 2);
+        (function (a, b) { args = arguments; })(1, 2);
         assert.strictEqual(isArrayLike(args, true), true);
 
         args.length = 10;
@@ -169,7 +167,9 @@ describe("isCollectionLike", () => {
 
 describe("isTypedArrayLike", () => {
     it("should check a Buffer", () => {
-        assert(isTypedArrayLike(Buffer.from([1, 2, 3])));
+        if (typeof Buffer === "function") {
+            assert(isTypedArrayLike(Buffer.from([1, 2, 3])));
+        }
     });
 
     it("should check a ArrayBuffer", () => {
@@ -232,10 +232,10 @@ describe("isPromiseLike", () => {
 
 describe("isObjectIdLike", () => {
     class ObjectId { }
-    class ObjectID {}
+    class ObjectID { }
 
     it("should check ObjectID-like objects", () => {
         assert(isObjectIdLike(new ObjectId()));
         assert(isObjectIdLike(new ObjectID()));
-    })
+    });
 });

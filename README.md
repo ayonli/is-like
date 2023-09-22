@@ -14,8 +14,6 @@ npm i is-like
 
 ```ts
 import { isDictLike, isArrayLike, /* ... */ } from "https://deno.land/x/is_like/index.js";
-// Or
-import { isDictLike, isArrayLike, /* ... */ } from "https://github.com/ayonli/is-like/raw/master/index.js";
 ```
 
 ## API
@@ -43,7 +41,6 @@ console.assert(!isDictLike(/[a-z]/));
 console.assert(!isDictLike(["hello", "world"]));
 console.assert(!isDictLike(new Map([["foo", "Hello"], ["bar", "World"]])));
 console.assert(!isDictLike(new Error("something went wrong")));
-console.assert(!isDictLike(Buffer.from("Hello, World!")));
 console.assert(!isDictLike(Promise.resolve("Hello, World!")));
 ```
 
